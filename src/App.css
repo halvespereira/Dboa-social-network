@@ -10,28 +10,266 @@ button {
 
 textarea {
   resize: none;
+  width: 70%;
+  margin: 7px 0px 0px 0px;
+  border: 2px solid #115548;
+  padding: 8px;
+  height: 40px;
 }
+
+label {
+  font-family: "Oswald", sans-serif;
+}
+
+h3,
+h4,
+h5 {
+  font-family: "Oswald", sans-serif;
+}
+
+p,
+textarea,
+button {
+  font-family: "Raleway", sans-serif;
+}
+
+input {
+  margin: 7px 0px 0px 0px;
+  border: 2px solid #115548;
+}
+
+/* Nav */
 
 .homeNav {
   display: flex;
-  background-color: sandybrown;
-  margin: 0;
+  position: sticky;
+  top: 0px;
+  background-color: #115548;
   border: 0;
   width: 100%;
   justify-content: space-evenly;
-  padding: 6px;
+  padding: 0;
+  color: white;
+  font-size: 21px;
+  z-index: 2;
 }
 
 .homeNav button {
   height: 40px;
-  margin-top: 7px;
+  margin-top: 18px;
   width: 60px;
+  background-color: #1c8774;
+  border: 1px solid #1f9882;
+  border-radius: 4px;
 }
+
+.homeNav button:hover {
+  background-color: #34d5b8;
+}
+
+/* Home Page Layout */
 
 .homeDiv {
   display: flex;
   justify-content: space-around;
 }
+
+/* My Profile  */
+
+.profileDiv {
+  width: 70%;
+  background-color: #1c8774;
+  color: white;
+  padding: 2px 7px 7px 15px;
+  margin: 2px 0 10px 0;
+  border-radius: 8px;
+  box-shadow: 4px 4px 12px gray;
+}
+
+.profile-Info-Post {
+  position: sticky;
+  top: 88px;
+  z-index: 2;
+
+  padding-right: 0px;
+  width: 250px;
+}
+
+.profileDiv h4 {
+  font-size: 25px;
+  margin-top: 8px;
+  margin-bottom: 13px;
+}
+
+.profileDiv p {
+  font-size: 16px;
+  margin: 20px 0 20px 0;
+}
+
+#postButton {
+  background-color: #1c8774;
+  height: 33px;
+  width: 70px;
+  border: 1px solid #1f9882;
+  border-radius: 4px;
+  color: white;
+  margin-left: 0px;
+}
+
+#postButton:hover {
+  background-color: #34d5b8;
+  color: black;
+}
+
+/* My Posts */
+
+.myPostsOuter {
+  width: 250px;
+  z-index: 1;
+  height: 90vh;
+}
+
+.myPostsOuter h5 {
+  text-align: center;
+  font-size: 22px;
+  margin: 0px 0 13px 0;
+  position: sticky;
+  top: 88px;
+  z-index: 2;
+  background-color: #1c8774;
+  color: white;
+}
+
+.myPosts {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+
+  z-index: 1;
+}
+
+.myPostsList {
+  overflow-y: auto;
+  height: 470px;
+  position: sticky;
+  top: 130px;
+}
+
+.myPostsList::-webkit-scrollbar {
+  display: none;
+}
+
+.myPosts p {
+  word-wrap: break-word;
+  max-width: 70%;
+  font-size: 16px;
+}
+
+.myPosts span {
+  cursor: pointer;
+  transform: translateY(16px);
+  background-color: #115548;
+  color: white;
+  padding: 1px;
+  height: 13px;
+  font-size: 11px;
+  border-radius: 2px;
+}
+
+/* Posts */
+
+.posts {
+  width: 250px;
+}
+
+.posts h5 {
+  text-align: center;
+  font-size: 22px;
+  margin: 0px 0 13px 0;
+  position: sticky;
+  top: 88px;
+  z-index: 2;
+  background-color: #1c8774;
+  color: white;
+}
+
+.post {
+  color: black;
+}
+
+.postsList {
+  height: 470px;
+  overflow-y: auto;
+  position: sticky;
+  top: 130px;
+}
+
+.postsList::-webkit-scrollbar {
+  display: none;
+}
+
+.post small {
+  border-bottom: #115548 1px solid;
+  margin-bottom: 0;
+}
+
+.post p {
+  max-width: 80%;
+  margin-top: 5px;
+  word-wrap: break-word;
+  font-size: 16px;
+}
+
+/* Users */
+
+.users {
+  width: 250px;
+  height: 470px;
+  overflow-y: auto;
+  position: sticky;
+  top: 88px;
+}
+
+.users::-webkit-scrollbar {
+  display: none;
+}
+
+.user {
+  width: 70%;
+  background-color: #1c8774;
+  color: white;
+  padding: 2px 7px 7px 15px;
+  margin: 1px 0 10px 0;
+  border-radius: 8px;
+  box-shadow: 4px 4px 12px gray;
+}
+
+.user h5 {
+  margin: 2px 0 2px 0;
+  font-size: 15px;
+}
+
+.user p {
+  font-size: 11px;
+}
+
+.usersFollowButton {
+  height: 25px;
+  width: 70px;
+  background-color: #115548;
+  border: 1px solid #1f9882;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  transform: translateX(-3px);
+}
+
+.usersFollowButton:hover {
+  color: black;
+  background-color: #34d5b8;
+}
+
+/* Signup/SignIn Page */
 
 .signInPageDiv {
   display: flex;
@@ -47,6 +285,12 @@ textarea {
 .formInput {
   width: 98%;
   margin-bottom: 17px;
+  border: 2px solid #115548;
+}
+
+.formInput:focus {
+  border: 2px solid #34d5b8;
+  box-shadow: 2px 2px 6px gray;
 }
 
 .errorMessage {
@@ -54,23 +298,28 @@ textarea {
   margin: 0;
 }
 
-.postsUL {
-  display: flex;
-  flex-direction: column-reverse;
-  padding: 0;
-  margin-left: 0;
+#newUserBio {
+  width: 91%;
+  margin-bottom: 17px;
+  border: 2px solid #115548;
 }
 
-.postsLi {
-  color: red;
+#newUserBio:focus {
+  border: 2px solid #34d5b8;
+  box-shadow: 2px 2px 6px gray;
 }
 
-.myPosts {
-  display: flex;
-  justify-content: space-between;
+.sign-In-Up-Button {
+  background-color: #1c8774;
+  height: 33px;
+  width: 70px;
+  border: 1px solid #1f9882;
+  border-radius: 4px;
+  color: white;
+  margin-left: 0px;
 }
 
-.myPosts span {
-  cursor: pointer;
-  transform: translateY(16px);
+.sign-In-Up-Button:hover {
+  background-color: #34d5b8;
+  color: black;
 }

@@ -156,11 +156,27 @@ const Home = (props) => {
         <div className="homeDiv">
           {/* User Profile */}
           <div>
-            <div>
-              <h4>{userinfo.name}</h4>
-              <h6>Age: {userinfo.age}</h6>
-              <h6>Bio: {userinfo.bio}</h6>
-              <h6>Followers: {userinfo.followers.length}</h6>
+            <div className="profile-Info-Post">
+              {users.map((user) =>
+                user.userId === userinfo.userId ? (
+                  <div className="profileDiv">
+                    <h4>{user.name}</h4>
+                    <p>
+                      <strong>Age: </strong> {user.age}
+                    </p>
+                    <p>
+                      <strong>Bio: </strong> {user.bio}
+                    </p>
+                    <p>
+                      <strong>Followers: </strong> {user.followers.length}
+                    </p>
+                    <p>
+                      <strong>Posts: </strong> {user.posts.length}
+                    </p>
+                  </div>
+                ) : null
+              )}
+
               <form>
                 <textarea
                   ref={newPost}
@@ -176,43 +192,71 @@ const Home = (props) => {
                   </button>
                 </div>
               </form>
-              <div>
-                {users.map((user) =>
-                  user.userId === userinfo.userId
-                    ? user.posts.map((post) => (
-                        <div className="myPosts">
-                          <p>{post}</p>
-                          <span onClick={deletePost}>X</span>
-                        </div>
-                      ))
-                    : null
-                )}
-              </div>
+            </div>
+          </div>
+
+          {/* My posts */}
+          <div className="myPostsOuter">
+            <h5>My Posts</h5>
+            <div className="myPostsList">
+              {users.map((user) =>
+                user.userId === userinfo.userId
+                  ? user.posts.map((post, idx) => (
+                      <div className="myPosts" key={idx}>
+                        <p>{post}</p>
+                        <span onClick={deletePost}>X</span>
+                      </div>
+                    ))
+                  : null
+              )}
             </div>
           </div>
           {/* Posts */}
-          <div>
-            {users.map((user) =>
-              user.posts.map((post) =>
-                user.followers.includes(userinfo.userId) ||
-                user.userId === userinfo.userId ? (
-                  <div>
-                    <p>{post}</p>
-                    <small>{user.name}</small>
-                  </div>
-                ) : null
-              )
-            )}
+          <div className="posts">
+            <h5>All Posts</h5>
+            <div className="postsList">
+              {users.map((user) =>
+                user.posts.map((post, idx) =>
+                  user.followers.includes(userinfo.userId) ||
+                  user.userId === userinfo.userId ? (
+                    <div key={idx} className="post">
+                      <small>{user.name} says: </small>
+                      <p>{post}</p>
+                    </div>
+                  ) : null
+                )
+              )}
+            </div>
           </div>
+
           {/* Profiles */}
           <div>
-            <div>
-              {users.map((user) =>
+            <div className="users">
+              {users.map((user, idx) =>
                 user.userId !== userinfo.userId ? (
-                  <div>
-                    <h3>{user.name}</h3>
-
-                    <button onClick={follow} id={user.userId}>
+                  <div key={idx} className="user">
+                    <h5>{user.name}</h5>
+                    <p>
+                      <strong>Age: </strong>
+                      {user.age}
+                    </p>
+                    <p>
+                      <strong>Bio: </strong>
+                      {user.bio}
+                    </p>
+                    <p>
+                      <strong> Followers: </strong>
+                      {user.followers.length}
+                    </p>
+                    <p>
+                      <strong>Posts: </strong>
+                      {user.posts.length}
+                    </p>
+                    <button
+                      className="usersFollowButton"
+                      onClick={follow}
+                      id={user.userId}
+                    >
                       {user.followers.includes(userinfo.userId)
                         ? "Following"
                         : "Follow"}
@@ -221,7 +265,6 @@ const Home = (props) => {
                 ) : null
               )}
             </div>
-            {/* <Users userId={props.userId} users={users} /> */}
           </div>
         </div>
       </div>

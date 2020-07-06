@@ -82,7 +82,6 @@ const UserSignup = () => {
               type="textarea"
               rows="5"
               cols="15"
-              className="formInput"
               id="newUserBio"
               ref={userBio}
             ></textarea>
@@ -97,7 +96,7 @@ const UserSignup = () => {
             />
           </div>
         </div>
-        <button>Sign Up</button>
+        <button className="sign-In-Up-Button">Sign Up</button>
       </form>
       <p ref={errorMessage}></p>
     </div>

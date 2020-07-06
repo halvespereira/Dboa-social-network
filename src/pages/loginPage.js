@@ -4,10 +4,17 @@ import UserSignup from "../components/UserSignup";
 
 const LoginPage = () => {
   return (
-    <div className="signInPageDiv">
-      <UserSignin />
-      <UserSignup />
-    </div>
+    <>
+      <div>
+        <nav className="homeNav">
+          <h3>Dboa Social</h3>
+        </nav>
+      </div>
+      <div className="signInPageDiv">
+        <UserSignin />
+        <UserSignup />
+      </div>
+    </>
   );
 };
 
