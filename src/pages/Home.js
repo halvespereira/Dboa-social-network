@@ -17,7 +17,7 @@ const Home = (props) => {
 
         setUsers(data);
       });
-  }, []);
+  }, [db]);
 
   const logout = (e) => {
     e.preventDefault();
