@@ -5,7 +5,7 @@ const Home = (props) => {
   const db = firebase.firestore();
   const auth = firebase.auth();
   const [userinfo, setUserinfo] = useState(null);
-  const [allposts, setAllposts] = useState(null);
+  // const [allposts, setAllposts] = useState(null);
   const [users, setUsers] = useState([]);
   const newPost = useRef();
   const postButton = useRef();
@@ -15,14 +15,14 @@ const Home = (props) => {
       .get()
       .then((snapshot) => {
         const data = snapshot.docs.map((doc) => doc.data());
-        const posts = snapshot.docs.reduce((acc, doc) => {
-          doc.data().posts.map((post) => acc.push(post));
+        // const posts = snapshot.docs.reduce((acc, doc) => {
+        //   doc.data().posts.map((post) => acc.push(post));
 
-          return acc;
-        }, []);
+        //   return acc;
+        // }, []);
 
         setUsers(data);
-        setAllposts(posts);
+        //setAllposts(posts);
       });
   }, [db]);
 
