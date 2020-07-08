@@ -5,6 +5,7 @@ const Home = (props) => {
   const db = firebase.firestore();
   const auth = firebase.auth();
   const [userinfo, setUserinfo] = useState(null);
+  const [allposts, setAllposts] = useState(null);
   const [users, setUsers] = useState([]);
   const newPost = useRef();
   const postButton = useRef();
@@ -14,8 +15,14 @@ const Home = (props) => {
       .get()
       .then((snapshot) => {
         const data = snapshot.docs.map((doc) => doc.data());
+        const posts = snapshot.docs.reduce((acc, doc) => {
+          doc.data().posts.map((post) => acc.push(post));
+
+          return acc;
+        }, []);
 
         setUsers(data);
+        setAllposts(posts);
       });
   }, [db]);
 
@@ -44,7 +51,18 @@ const Home = (props) => {
     setUsers(
       users.map((user) =>
         user.userId === userinfo.userId
-          ? { ...user, posts: [...user.posts, newPost.current.value] }
+          ? {
+              ...user,
+              posts: [
+                ...user.posts,
+                {
+                  post: newPost.current.value,
+                  milliseconds: new Date().getTime(),
+                  date: new Date().toLocaleDateString(),
+                  time: new Date().toLocaleTimeString(),
+                },
+              ],
+            }
           : user
       )
     );
@@ -53,9 +71,12 @@ const Home = (props) => {
       db.collection("users")
         .doc(userinfo.userId)
         .update({
-          posts: firebase.firestore.FieldValue.arrayUnion(
-            newPost.current.value
-          ),
+          posts: firebase.firestore.FieldValue.arrayUnion({
+            post: newPost.current.value,
+            milliseconds: new Date().getTime(),
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+          }),
         });
       console.log("posts updated successfully");
     }
@@ -66,6 +87,25 @@ const Home = (props) => {
   const deletePost = (e) => {
     e.persist();
 
+    const array = users.reduce((acc, user) => {
+      if (user.userId === userinfo.userId) {
+        const deletePost = user.posts.find(
+          (post) => post.post === e.target.closest("div").firstChild.textContent
+        );
+        acc.post = deletePost.post;
+        acc.milliseconds = deletePost.milliseconds;
+        acc.date = deletePost.date;
+        acc.time = deletePost.time;
+      }
+      return acc;
+    }, {});
+
+    db.collection("users")
+      .doc(userinfo.userId)
+      .update({
+        posts: firebase.firestore.FieldValue.arrayRemove(array),
+      });
+
     setUsers(
       users.map((user) =>
         user.userId === userinfo.userId
@@ -74,21 +114,13 @@ const Home = (props) => {
               posts: [
                 ...user.posts.filter(
                   (item) =>
-                    item !== e.target.closest("div").firstChild.textContent
+                    item.post !== e.target.closest("div").firstChild.textContent
                 ),
               ],
             }
           : user
       )
     );
-
-    db.collection("users")
-      .doc(userinfo.userId)
-      .update({
-        posts: firebase.firestore.FieldValue.arrayRemove(
-          e.target.closest("div").firstChild.textContent
-        ),
-      });
   };
 
   const follow = async (e) => {
@@ -157,9 +189,9 @@ const Home = (props) => {
           {/* User Profile */}
           <div>
             <div className="profile-Info-Post">
-              {users.map((user) =>
+              {users.map((user, idx) =>
                 user.userId === userinfo.userId ? (
-                  <div className="profileDiv">
+                  <div className="profileDiv" key={idx}>
                     <h4>{user.name}</h4>
                     <p>
                       <strong>Age: </strong> {user.age}
@@ -201,12 +233,20 @@ const Home = (props) => {
             <div className="myPostsList">
               {users.map((user) =>
                 user.userId === userinfo.userId
-                  ? user.posts.map((post, idx) => (
-                      <div className="myPosts" key={idx}>
-                        <p>{post}</p>
-                        <span onClick={deletePost}>X</span>
-                      </div>
-                    ))
+                  ? user.posts.map((post, idx) =>
+                      post.post ? (
+                        <div key={idx}>
+                          <div>
+                            <small>On {post.date} </small>
+                            <small>at: {post.time} I said:</small>
+                          </div>
+                          <div className="myPosts">
+                            <p>{post.post}</p>
+                            <span onClick={deletePost}>X</span>
+                          </div>
+                        </div>
+                      ) : null
+                    )
                   : null
               )}
             </div>
@@ -218,10 +258,12 @@ const Home = (props) => {
               {users.map((user) =>
                 user.posts.map((post, idx) =>
                   user.followers.includes(userinfo.userId) ||
-                  user.userId === userinfo.userId ? (
+                  (user.userId === userinfo.userId && post.post) ? (
                     <div key={idx} className="post">
-                      <small>{user.name} says: </small>
-                      <p>{post}</p>
+                      <small>On {post.date} </small>
+                      <small>at: {post.time} </small>
+                      <small>{user.name}: </small>
+                      <p>{post.post}</p>
                     </div>
                   ) : null
                 )
